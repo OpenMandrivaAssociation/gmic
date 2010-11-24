@@ -11,7 +11,8 @@ Group:		Graphics
 Url:		http://gmic.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/gmic/%{name}_%{version}.tar.gz
 Requires:	gimp
-BuildRequires:	gimp-devel fftw3-devel graphicsmagick graphicsmagick-devel opencv-devel
+BuildRequires:	gimp-devel fftw3-devel graphicsmagick graphicsmagick-devel
+BuildRequires:	opencv-devel OpenEXR-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
