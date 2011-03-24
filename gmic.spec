@@ -1,15 +1,14 @@
-%define _disable_ld_as_needed 1
-
 %define gimp_api_version 2.0
 
 Summary:	G'MIC extends GIMP's retouching software capabilities with additional filters and effects
 Name:		gmic
 Version:	1.4.5.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	CeCILL
 Group:		Graphics
 Url:		http://gmic.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/gmic/%{name}_%{version}.tar.gz
+Patch0:		gmic_1.4.5.2-link.patch
 Requires:	gimp
 BuildRequires:	gimp-devel fftw3-devel graphicsmagick graphicsmagick-devel
 BuildRequires:	opencv-devel OpenEXR-devel
@@ -36,6 +35,7 @@ effects.
 
 %prep
 %setup -q
+%patch0 -p0 -b .link
 
 %build
 %configure2_5x
