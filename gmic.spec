@@ -1,57 +1,157 @@
-%define gimp_api_version 2.0
+%define	major	1
+%define	libname		%mklibname %{name} %{major}
+%define	develname	%mklibname -d %{name}
 
-Summary:	G'MIC extends GIMP's retouching software capabilities with additional filters and effects
 Name:		gmic
-Version:	1.4.5.2
-Release:	%mkrel 2
-License:	CeCILL
+Version:	1.5.2.2
+Release:	1
 Group:		Graphics
-Url:		http://gmic.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/gmic/%{name}_%{version}.tar.gz
-Patch0:		gmic_1.4.5.2-link.patch
-Requires:	gimp
-BuildRequires:	gimp-devel fftw3-devel graphicsmagick graphicsmagick-devel
-BuildRequires:	opencv-devel OpenEXR-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
+# CeCILL version 2.0
+License:	CeCILL
+Summary:	A script language (G'MIC) dedicated to image processing
+Url:		http://gmic.sourceforge.net
+Source:		http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
+# Even minor version change requires re-diff
+Patch0:		gmic-%{version}-Makefile.patch
+Patch1:		gmic-1.5.2.2-zartlibs.patch
+BuildRequires:	ffmpeg-devel
+BuildRequires:	qt4-devel
+BuildRequires:	pkgconfig(fftw3)
+BuildRequires:	pkgconfig(gimp-2.0)
+BuildRequires:	pkgconfig(GraphicsMagick)
+BuildRequires:	pkgconfig(opencv)
 
 %description
-G'MIC stands for GREYC's Magic Image Converter. This project aims to define a
-minimal but powerful script language (G'MIC) dedicated to the design of image
-processing pipelines, provide an interpreter of this language (in C++),
-distributed as an open-source module/library embeddable in third-party
-applications and propose two tools embedding this interpreter: The command-line
-executable gmic to use the G'MIC framework from a shell, and the interactive
-plug-in gmic_gimp to bring G'MIC capabilities to the image retouching software
-GIMP.
+G'MIC defines a complete image processing framework, and thus 
+can manage generic image data as other image-related tools. 
 
-G'MIC is focused on the design of complex pipelines for converting,
-manipulating, filtering and visualizing generic 1d/2d/3d multi-spectral image
-datasets. Of course, it is able to manage color images, but also more complex
-data as image sequences or 3d volumetric datasets.
+Anyway, the specific features described below make it a bit particular :
 
-G'MIC is an open framework : it is possible to extend the proposed default
-language with custom G'MIC-written commands, defining thus new image filters or
-effects.
+* It internally works with lists of images. 
+  Image manipulations and interactions can be done 
+  either grouped or focused on specific items.
+* It can process a wide variety of image types, 
+  including multi-spectral (arbitray number of channels)
+  and 3d volumetric images, as well as image sequences, 
+  or 3d vector objects. 
+  Images with different pixel types are supported, 
+  allowing to process flawlessly images with 8bits or 
+  16bits integers per channel, as well as float-valued datasets.
+* It provides small but efficient visualization modules 
+  dedicated to the exploration/viewing of 2d/3d multi-spectral images, 
+  3d vector objects (elevation map, isocurves, isosurfaces,...), 
+  or 1d graph plots.
+* It proposes commands to handle custom interactive windows 
+  where events can be managed easily by the user.
+* It is highly extensible through the importation of custom command 
+  files which add new commands that become understood by the 
+  language interpreter.
+* Most of the functionalities can be used inside GIMP 
+  via the provided plug-in, allowing end-users to integrate 
+  any G'MIC-based pipeline directly in a nice GUI, 
+  without coding efforts.
+* It is based on the latest development versions of the CImg Library, 
+  a well established C++ template image processing toolkit, 
+  developed by the same team of developers.
+
+%files
+%doc COPYING README
+%config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}
+%{_bindir}/%{name}
+%{_mandir}/man1/%{name}.1.*
+%{_mandir}/fr/man1/gmic.1.*
+
+#------------------------------------------------------
+
+%package -n zart
+Summary:	GUI for G'MIC real-time manipulations on the output of a webcam
+Group:		Graphics
+Requires:	%{name} = %{version}-%{release}
+Provides:	%{name}-zart = %{version}-%{release}
+Conflicts:	%{name} < 1.5.1.5-1
+
+%description -n zart
+ZArt is a computer program whose purpose is to demonstrate the possibilities of
+the G'MIC image processing language by offering the choice of several
+manipulations on a video stream acquired from a webcam.
+
+%files -n zart
+%{_bindir}/zart
+%{_datadir}/zart/haarcascade*.xml
+
+#------------------------------------------------------
+
+%package -n gimp-plugin-%{name}
+Summary:	gmic plugin for gimp
+Group:		Graphics
+Requires:	gimp >= 2.6.0
+Obsoletes:	%{name}-gimp < 1.5.1.5-1
+Provides:	%{name}-gimp = %{version}-%{release}
+Conflicts:	%{name} < 1.5.1.5-1
+
+%description -n gimp-plugin-%{name}
+G'MIC has been made available as an easy-to-use plug-in for GIMP.
+It extends this retouching software capabilities by offering a large number of
+pre-defined image filters and effects.
+Of course, the plug-in is highly customizable and it is possible to add your
+own custom G'MIC-written filters in it.
+
+%files -n gimp-plugin-%{name}
+%{_libdir}/gimp/2.0/plug-ins/%{name}_gimp
+
+#------------------------------------------------------
+
+%package -n %{libname}
+Summary:	Library for gmic
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
+Conflicts:	%{name} < 1.5.1.5-1
+
+%description -n %{libname}
+This package contains the library needed to run programs
+dynamically linked with gmic.
+
+%files -n %{libname}
+%{_libdir}/lib%{name}.so.*
+
+#------------------------------------------------------
+
+%package -n %{develname}
+Summary:	Header file for gmic
+Group:		Development/C++
+Requires:	%{name} = %{version}-%{release}
+Obsoletes:	%{name}-gimp-devel < 1.5.1.5-1
+Provides:	%{name}-devel = %{version}-%{release}
+Conflicts:	%{name} < 1.5.1.5-1
+
+%description -n %{develname}
+This package contains the development file for gmic.
+
+%files -n %{develname}
+%{_includedir}/%{name}.h
+
+#------------------------------------------------------
 
 %prep
 %setup -q
-%patch0 -p0 -b .link
+%patch0 -p1 -b .makefile
+%patch1 -p1 -b .zartlibs
+
+sed -i -e "s|@LIB@|%{_lib}|g" src/Makefile
 
 %build
-%configure2_5x
+%setup_compile_flags
+
+pushd src
 %make
+popd
+pushd zart
+%qmake_qt4
+%make
+popd
 
 %install
-rm -rf %{buildroot}
+pushd src
 %makeinstall_std
+popd
 
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
-%files
-%defattr(-,root,root)
-%doc README AUTHORS COPYING NEWS
-%{_bindir}/gmic
-%{_libdir}/gimp/%{gimp_api_version}/plug-ins/gmic_gimp
-%{_mandir}/*/*
-%{_sysconfdir}/bash_completion.d/gmic
