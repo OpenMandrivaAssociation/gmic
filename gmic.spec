@@ -3,17 +3,14 @@
 %define	develname	%mklibname -d %{name}
 
 Name:		gmic
-Version:	1.5.2.2
+Version:	1.5.8.2
 Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.sourceforge.net
-Source:		http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
-# Even minor version change requires re-diff
-Patch0:		gmic-%{version}-Makefile.patch
-Patch1:		gmic-1.5.2.2-zartlibs.patch
+Source0:	http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qt4-devel
 BuildRequires:	pkgconfig(fftw3)
@@ -56,7 +53,7 @@ Anyway, the specific features described below make it a bit particular :
 
 %files
 %doc COPYING README
-%config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}
+%{_sysconfdir}/bash_completion.d/%{name}
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/fr/man1/gmic.1.*
@@ -77,7 +74,6 @@ manipulations on a video stream acquired from a webcam.
 
 %files -n zart
 %{_bindir}/zart
-%{_datadir}/zart/haarcascade*.xml
 
 #------------------------------------------------------
 
@@ -112,7 +108,7 @@ This package contains the library needed to run programs
 dynamically linked with gmic.
 
 %files -n %{libname}
-%{_libdir}/lib%{name}.so.*
+%{_libdir}/lib%{name}.so.%{major}*
 
 #------------------------------------------------------
 
@@ -129,15 +125,14 @@ This package contains the development file for gmic.
 
 %files -n %{develname}
 %{_includedir}/%{name}.h
+%{_libdir}/lib%{name}.so
 
 #------------------------------------------------------
 
 %prep
 %setup -q
-%patch0 -p1 -b .makefile
-%patch1 -p1 -b .zartlibs
 
-sed -i -e "s|@LIB@|%{_lib}|g" src/Makefile
+sed -i -e "s|/lib/|/%{_lib}/|g" src/Makefile
 
 %build
 %setup_compile_flags
@@ -147,11 +142,14 @@ pushd src
 popd
 pushd zart
 %qmake_qt4
-%make
+# Work around bogus Makefile generation
+sed -i -e 's,/usr/%{_lib}/lib,-l,g' Makefile
+%make QMAKE=true
 popd
 
 %install
 pushd src
 %makeinstall_std
 popd
-
+cd zart
+install -c -m 755 zart %{buildroot}%{_bindir}/
