@@ -17,6 +17,7 @@ BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
 BuildRequires:	pkgconfig(opencv)
+BuildRequires:	pkgconfig(glu)
 
 %description
 G'MIC defines a complete image processing framework, and thus 
