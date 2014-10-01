@@ -3,8 +3,8 @@
 %define	develname	%mklibname -d %{name}
 
 Name:		gmic
-Version:	1.5.8.2
-Release:	3
+Version:	1.6.0.0
+Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -133,12 +133,11 @@ This package contains the development file for gmic.
 %prep
 %setup -q
 
-sed -i -e "s|/lib/|/%{_lib}/|g" src/Makefile
-
 %build
 %setup_compile_flags
 
 pushd src
+sed -i -e 's,LIB=lib,LIB=%_lib,' Makefile
 %make
 popd
 pushd zart
