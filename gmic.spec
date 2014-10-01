@@ -13,6 +13,7 @@ Url:		http://gmic.sourceforge.net
 Source0:	http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qt4-devel
+BuildRequires:	gomp-devel
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
