@@ -4,7 +4,7 @@
 
 Name:		gmic
 Version:	1.6.0.0
-Release:	1
+Release:	2
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
