@@ -12,7 +12,8 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.sourceforge.net
 Source0:	http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
 BuildRequires:	ffmpeg-devel
-BuildRequires:	qt4-devel
+BuildRequires:	qmake5
+BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
@@ -136,6 +137,7 @@ This package contains the development file for gmic.
 
 %build
 %setup_compile_flags
+sed -i -e "s/qmake zart.pro/qmake-qt5 zart.pro/g" src/Makefile
 
 pushd src
 sed -i -e 's,LIB=lib,LIB=%_lib,' Makefile
