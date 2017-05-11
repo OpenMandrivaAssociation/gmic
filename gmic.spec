@@ -1,10 +1,10 @@
 %define	major	1
-%define	libname		%mklibname %{name} %{major}
-%define	develname	%mklibname -d %{name}
+%define	libname %mklibname %{name} %{major}
+%define	develname %mklibname -d %{name}
 
 Name:		gmic
-Version:	1.6.0.0
-Release:	4
+Version:	1.7.9.1
+Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -13,7 +13,6 @@ Url:		http://gmic.sourceforge.net
 Source0:	http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qt4-devel
-BuildRequires:	gomp-devel
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
