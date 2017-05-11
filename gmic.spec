@@ -1,6 +1,7 @@
 %define	major	1
 %define	libname %mklibname %{name} %{major}
 %define	develname %mklibname -d %{name}
+%define _disable_lto 1
 
 Name:		gmic
 Version:	1.7.9.1
