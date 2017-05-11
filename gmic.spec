@@ -131,7 +131,7 @@ This package contains the development file for gmic.
 #------------------------------------------------------
 
 %prep
-%setup -qn %{name}_%{version}
+%setup -qn %{name}-1.7.9
 
 %build
 %setup_compile_flags
