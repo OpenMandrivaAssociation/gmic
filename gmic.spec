@@ -144,7 +144,7 @@ This package contains the development file for gmic.
 %setup_compile_flags
 sed -i -e "s/qmake zart.pro/qmake-qt5 zart.pro/g" src/Makefile
 # (tpg) use OMP form llvm
-sed -i -e "s/-lgomp//g" CMakeLists.txt src/Makefile
+sed -i -e "s/-lgomp/-fopenmp/g" CMakeLists.txt src/Makefile
 
 pushd src
 sed -i -e 's,LIB=lib,LIB=%_lib,' Makefile
