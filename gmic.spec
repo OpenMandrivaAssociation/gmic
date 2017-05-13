@@ -13,11 +13,6 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.sourceforge.net
 Source0:	http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
 BuildRequires:	ffmpeg-devel
-BuildRequires:  qmake5
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Gui)
-BuildRequires:  pkgconfig(Qt5Network)
-BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5Xml)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
@@ -150,16 +145,9 @@ pushd src
 sed -i -e 's,LIB=lib,LIB=%_lib,' Makefile
 %make
 popd
-pushd zart
-%qmake_qt5 zart.pro
-# Work around bogus Makefile generation
-sed -i -e 's,/usr/%{_lib}/lib,-l,g' Makefile
-%make QMAKE=true
-popd
+
 
 %install
 pushd src
 %makeinstall_std
 popd
-cd zart
-install -c -m 755 zart %{buildroot}%{_bindir}/
