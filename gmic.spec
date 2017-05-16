@@ -63,23 +63,6 @@ Anyway, the specific features described below make it a bit particular :
 
 #------------------------------------------------------
 
-%package -n zart
-Summary:	GUI for G'MIC real-time manipulations on the output of a webcam
-Group:		Graphics
-Requires:	%{name} = %{version}-%{release}
-Provides:	%{name}-zart = %{version}-%{release}
-Conflicts:	%{name} < 1.5.1.5-1
-
-%description -n zart
-ZArt is a computer program whose purpose is to demonstrate the possibilities of
-the G'MIC image processing language by offering the choice of several
-manipulations on a video stream acquired from a webcam.
-
-%files -n zart
-%{_bindir}/zart
-
-#------------------------------------------------------
-
 %package -n gimp-plugin-%{name}
 Summary:	gmic plugin for gimp
 Group:		Graphics
@@ -97,6 +80,7 @@ own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
 %{_libdir}/gimp/2.0/plug-ins/%{name}_gimp
+%{_libdir}/gimp/2.0/plug-ins/gmic_film_cluts.gmz
 
 #------------------------------------------------------
 
@@ -138,11 +122,12 @@ This package contains the development file for gmic.
 %build
 %setup_compile_flags
 sed -i -e "s/qmake zart.pro/qmake-qt5 zart.pro/g" src/Makefile
+
 # (tpg) use OMP form llvm
 sed -i -e "s/-lgomp/-fopenmp/g" CMakeLists.txt src/Makefile
 
 pushd src
-sed -i -e 's,LIB=lib,LIB=%_lib,' Makefile
+sed -i -e 's,LIB = lib,LIB = %{_lib},' Makefile
 %make
 popd
 
