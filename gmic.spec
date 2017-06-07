@@ -1,17 +1,18 @@
-%define	major	1
+%define	major	2
 %define	libname %mklibname %{name} %{major}
 %define	develname %mklibname -d %{name}
 %define _disable_lto 1
 
 Name:		gmic
-Version:	1.7.9.1
+Version:	2.0.0
 Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
-Url:		http://gmic.sourceforge.net
-Source0:	http://sourceforge.net/projects/gmic/files/%{name}_%{version}.tar.gz
+Url:		http://gmic.eu
+Source0:	https://github.com/dtschump/gmic/archive/v.%(echo %{version} |sed -e 's,\.,,g').tar.gz
+Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
 BuildRequires:  pkgconfig(Qt5Xml)
 BuildRequires:	pkgconfig(fftw3)
@@ -56,10 +57,7 @@ Anyway, the specific features described below make it a bit particular :
 
 %files
 %doc COPYING README
-%{_sysconfdir}/bash_completion.d/%{name}
 %{_bindir}/%{name}
-%{_mandir}/man1/%{name}.1.*
-%{_mandir}/fr/man1/gmic.1.*
 
 #------------------------------------------------------
 
@@ -79,7 +77,7 @@ Of course, the plug-in is highly customizable and it is possible to add your
 own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
-%{_libdir}/gimp/2.0/plug-ins/%{name}_gimp
+%{_libdir}/gimp/2.0/plug-ins/gmic_gimp_gtk
 %{_libdir}/gimp/2.0/plug-ins/gmic_film_cluts.gmz
 
 #------------------------------------------------------
@@ -96,6 +94,7 @@ dynamically linked with gmic.
 
 %files -n %{libname}
 %{_libdir}/lib%{name}.so.%{major}*
+%{_libdir}/lib%{name}.so.1
 
 #------------------------------------------------------
 
@@ -117,7 +116,7 @@ This package contains the development file for gmic.
 #------------------------------------------------------
 
 %prep
-%setup -qn %{name}-1.7.9
+%setup -qn %{name}-v.%(echo %{version} |sed -e 's,\.,,g')
 
 %build
 %setup_compile_flags
