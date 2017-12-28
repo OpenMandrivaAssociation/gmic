@@ -1,13 +1,18 @@
 %define	major	2
 %define	libname %mklibname %{name} %{major}
 %define	develname %mklibname -d %{name}
+
+%define cmajor 2
+%define clibname %mklibname cgmic %{cmajor}
+%define cdevelname %mklibname -d cgmic
+
 %define _disable_lto 1
 %ifarch aarch64
 %global optflags %{optflags} -fuse-ld=bfd
 %endif
 
 Name:		gmic
-Version:	2.0.0
+Version:	2.1.7
 Release:	1
 Group:		Graphics
 # CeCILL version 2.0
@@ -15,6 +20,11 @@ License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
 Source0:	https://github.com/dtschump/gmic/archive/v.%(echo %{version} |sed -e 's,\.,,g').tar.gz
+Source1:	https://github.com/c-koi/gmic-qt/archive/v.215.tar.gz
+Source2:	https://github.com/c-koi/zart/archive/master.tar.gz
+Source3:	https://github.com/dtschump/gmic-community/archive/master.zip
+Source4:	https://github.com/dtschump/CImg/archive/v.217.zip
+Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
 BuildRequires:  pkgconfig(Qt5Xml)
@@ -24,6 +34,9 @@ BuildRequires:	pkgconfig(GraphicsMagick)
 BuildRequires:	pkgconfig(opencv)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(libcurl)
+# gmic Makefiles are rather broken and will prefer
+# /usr/include/gmic.h over the local gmic.h
+BuildConflicts: gmic-devel
 
 %description
 G'MIC defines a complete image processing framework, and thus 
@@ -80,8 +93,49 @@ Of course, the plug-in is highly customizable and it is possible to add your
 own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
-%{_libdir}/gimp/2.0/plug-ins/gmic_gimp_gtk
+%{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
 %{_libdir}/gimp/2.0/plug-ins/gmic_film_cluts.gmz
+
+#------------------------------------------------------
+
+%package -n krita-plugin-%{name}
+Summary:	gmic plugin for Krita
+Group:		Graphics
+Requires:	krita >= 3.0
+
+%description -n krita-plugin-%{name}
+G'MIC has been made available as an easy-to-use plug-in for Krita.
+It extends this retouching software capabilities by offering a large number of
+pre-defined image filters and effects.
+Of course, the plug-in is highly customizable and it is possible to add your
+own custom G'MIC-written filters in it.
+
+%files -n krita-plugin-%{name}
+%{_bindir}/gmic_krita_qt
+
+#------------------------------------------------------
+
+%package qt
+Summary:	Qt frontend for applying g'mic filters
+Group:		Graphics
+
+%description qt
+Qt frontend for applying g'mic filters
+
+%files qt
+%{_bindir}/gmic_qt
+
+#------------------------------------------------------
+
+%package zart
+Summary:	Application for applying live effects to Webcam images
+Group:		Graphics
+
+%description zart
+Application for applying live effects to Webcam images
+
+%files zart
+%{_bindir}/zart
 
 #------------------------------------------------------
 
@@ -97,7 +151,6 @@ dynamically linked with gmic.
 
 %files -n %{libname}
 %{_libdir}/lib%{name}.so.%{major}*
-%{_libdir}/lib%{name}.so.1
 
 #------------------------------------------------------
 
@@ -118,21 +171,76 @@ This package contains the development file for gmic.
 
 #------------------------------------------------------
 
+%package -n %{clibname}
+Summary:	C Library for gmic
+Group:		System/Libraries
+Requires:	%{libname} = %{EVRD}
+
+%description -n %{clibname}
+This package contains the library needed to run programs
+dynamically linked with gmic's C bindings
+
+%files -n %{clibname}
+%{_libdir}/libc%{name}.so.%{cmajor}*
+
+#------------------------------------------------------
+
+%package -n %{cdevelname}
+Summary:	Header file for gmic C bindings
+Group:		Development/C
+Requires:	%{develname} = %{EVRD}
+
+%description -n %{cdevelname}
+This package contains the development file for gmic C bindings.
+
+%files -n %{cdevelname}
+%{_includedir}/%{name}_libc.h
+%{_libdir}/libc%{name}.so
+
+#------------------------------------------------------
+
 %prep
-%setup -qn %{name}-v.%(echo %{version} |sed -e 's,\.,,g')
+%setup -qn %{name}-v.%(echo %{version} |sed -e 's,\.,,g') -a 1 -a 2 -a 3 -a 4
+pushd ..
+rm -rf gmic-qt* zart* gmic-community* CImg*
+popd
+mv gmic-qt-v.* ../gmic-qt
+mv zart-* zart
+mv gmic-community-* ../gmic-community
+mv CImg-* ../CImg
+ln -s ../gmic-qt ../gmic-community ../CImg .
+
+#cd ../gmic-qt/src
+#ln -s ../../CImg/CImg.h .
 
 %build
 %setup_compile_flags
-sed -i -e "s/qmake zart.pro/qmake-qt5 zart.pro/g" src/Makefile
 
 # (tpg) use OMP form llvm
-sed -i -e "s/-lgomp/-fopenmp/g" CMakeLists.txt src/Makefile
+sed -i -e "s/-lgomp/-fopenmp/g" src/Makefile
 
-pushd src
+cd src
+# Fix install location...
 sed -i -e 's,LIB = lib,LIB = %{_lib},' Makefile
-%make
-popd
-
+# And pass compiler flags while linking (vital for -flto)
+sed -i -e 's|-Wl,-soname|$(CFLAGS) -Wl,-soname|' Makefile
+%make clean
+cp %{SOURCE5} .
+# We can save some compile time by generating a PCH for CImg...
+%make WGET=false CC=%{__cc} CXX=%{__cxx} check_versions gmic.cpp gmic.h gmic_stdlib.h CImg.h
+#%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c CImg.h -o CImg.h.pch
+#%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c gmic.h -o gmic.h.pch
+#-include-pch CImg.h.pch -include-pch gmic.h.pch
+%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" lib
+%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" libc
+%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" cli
+%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" zart
+%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" gmic_qt
+%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" krita_qt
+# Not only does GTK suck, the gtk module also doesn't compile...
+#make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" gimp_gtk
+%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" gimp_qt
+#%make QMAKE=qmake-qt5 WGET=false gimp gimp_qt krita_qt gmic_qt
 
 %install
 pushd src

@@ -1,2 +1,7 @@
 sources:
-  v.200.tar.gz: 077ddc7029b4ca014b0ecbe6628afbe02ffe9865
+  master.tar.gz: f7ab077d74013b10b0af061e52a59efae5d0a1d4
+  master.zip: ee227b7e3a208717de29508dd4ac8acdb1cb0bdc
+  v.215.tar.gz: a961f2db727591d974dbd6ecff3464ba659eeb5b
+  v.217.tar.gz: c644d3b3fbf228ab790a016426169239148e34fb
+  v.217.zip: 4ba7eaf2e9271021d9d9fff19003927fde779e65
+  gmic_stdlib.h: bfa7567124a2ba2c53fc31ca0abf32cbe25f62be
