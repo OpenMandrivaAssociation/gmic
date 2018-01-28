@@ -1,7 +1,5 @@
 sources:
+  cimg-v.219.tar.gz: 6bce918e9cbc8b0361c76720103a663a205187c2
   master.tar.gz: f7ab077d74013b10b0af061e52a59efae5d0a1d4
-  master.zip: ee227b7e3a208717de29508dd4ac8acdb1cb0bdc
-  v.215.tar.gz: a961f2db727591d974dbd6ecff3464ba659eeb5b
-  v.217.tar.gz: c644d3b3fbf228ab790a016426169239148e34fb
-  v.217.zip: 4ba7eaf2e9271021d9d9fff19003927fde779e65
-  gmic_stdlib.h: bfa7567124a2ba2c53fc31ca0abf32cbe25f62be
+  master.zip: 9d38ceec11e4ce39e2c11f84a3f90304b74991e4
+  v.219.zip: 97ed4ee2a9ba6004d9649c8dc51bc5e2082ece8c
