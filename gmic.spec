@@ -27,6 +27,11 @@ Source4:	https://github.com/dtschump/CImg/archive/cimg-v.%(echo %{version} |sed 
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
+BuildRequires:  qmake5
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(Qt5Xml)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
@@ -34,6 +39,9 @@ BuildRequires:	pkgconfig(GraphicsMagick)
 BuildRequires:	pkgconfig(opencv)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(libcurl)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(x11)
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
 BuildConflicts: gmic-devel
