@@ -1,0 +1,2 @@
+# libgmic ships both as .so.1 and .so.2
+addFilter("E: incoherent-version-in-name")

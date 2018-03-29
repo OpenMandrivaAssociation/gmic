@@ -1,2 +1,6 @@
 sources:
-  gmic_1.7.9.1.tar.gz: 4560c286fd29f3c22ae185cefde787ea5cd47f50
+  master.tar.gz: bb35bff8e3b348f275a7dc00339af881355628f4
+  master.zip: 559ed4b5c681734213bd20b8c93fc2eb3aaa6b1b
+  v.2.2.1.tar.gz: 83e2fc927385ec08cb9a61079554814f4e70ca83
+  v.2.2.1.zip: ba943fb0fc78c6bd09a40f69a9ca5401ade240aa
+  v.221.tar.gz: d28a9a279e05e700bc08c3f036ae314a5f1d6b58
