@@ -12,18 +12,18 @@
 %endif
 
 Name:		gmic
-Version:	2.2.1
-Release:	2
+Version:	2.2.3
+Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
-Source0:	https://github.com/dtschump/gmic/archive/v.%{version}.tar.gz
-Source1:	https://github.com/c-koi/gmic-qt/archive/v.%{version}.zip
-Source2:	https://github.com/c-koi/zart/archive/master.tar.gz
-Source3:	https://github.com/dtschump/gmic-community/archive/master.zip
-Source4:	https://github.com/dtschump/CImg/archive/v.%(echo %{version} |sed -e 's,\.,,g').tar.gz
+Source0:	https://github.com/dtschump/gmic/archive/%{name}-v.%{version}.tar.gz
+Source1:	https://github.com/c-koi/gmic-qt/archive/%{name}-qt-v.%{version}.tar.gz
+Source2:	https://github.com/c-koi/zart/archive/zart-master.zip
+Source3:	https://github.com/dtschump/gmic-community/archive/gmic-community-master.zip
+Source4:	https://github.com/dtschump/CImg/archive/CImg-v.%{version}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
