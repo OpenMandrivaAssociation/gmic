@@ -13,7 +13,7 @@
 
 Name:		gmic
 Version:	2.2.1
-Release:	1
+Release:	2
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -28,6 +28,7 @@ Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
 BuildRequires:  qmake5
+BuildRequires:  pkgconfig(libtiff-4)
 BuildRequires:  pkgconfig(libjpeg)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Gui)
