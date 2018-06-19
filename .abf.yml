@@ -1,6 +1,6 @@
 sources:
   master.tar.gz: bb35bff8e3b348f275a7dc00339af881355628f4
   master.zip: 559ed4b5c681734213bd20b8c93fc2eb3aaa6b1b
-  v.2.2.1.tar.gz: 83e2fc927385ec08cb9a61079554814f4e70ca83
-  v.2.2.1.zip: ba943fb0fc78c6bd09a40f69a9ca5401ade240aa
-  v.221.tar.gz: d28a9a279e05e700bc08c3f036ae314a5f1d6b58
+  gmic-v.2.2.3.tar.gz: 56beb236ee0bc833909f6af5de9cf3f9ecca0262
+  gmic-qt-v.2.2.3.tar.gz: a3c889de09031d34754c9bb3bd1004a2f67713c6
+  CImg-v.2.2.3.tar.gz: fa9243926a6efbe855511ea6d48ebfcf0922333a
