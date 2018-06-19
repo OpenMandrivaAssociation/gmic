@@ -28,6 +28,7 @@ Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
 BuildRequires:  qmake5
+BuildRequires:  pkgconfig(OpenEXR)
 BuildRequires:  pkgconfig(libtiff-4)
 BuildRequires:  pkgconfig(libjpeg)
 BuildRequires:  pkgconfig(Qt5Core)
