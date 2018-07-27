@@ -27,15 +27,15 @@ Source4:	https://github.com/dtschump/CImg/archive/CImg-v.%{version}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
-BuildRequires:  qmake5
-BuildRequires:  pkgconfig(OpenEXR)
-BuildRequires:  pkgconfig(libtiff-4)
-BuildRequires:  pkgconfig(libjpeg)
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Gui)
-BuildRequires:  pkgconfig(Qt5Network)
-BuildRequires:  pkgconfig(Qt5Widgets)
-BuildRequires:  pkgconfig(Qt5Xml)
+BuildRequires:	qmake5
+BuildRequires:	pkgconfig(OpenEXR)
+BuildRequires:	pkgconfig(libtiff-4)
+BuildRequires:	pkgconfig(libjpeg)
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Network)
+BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt5Xml)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
@@ -45,6 +45,7 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(x11)
+BuildRequires:	libatomic-devel
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
 BuildConflicts: gmic-devel
