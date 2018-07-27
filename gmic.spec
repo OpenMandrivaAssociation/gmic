@@ -242,18 +242,18 @@ cp %{SOURCE5} .
 #%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c CImg.h -o CImg.h.pch
 #%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c gmic.h -o gmic.h.pch
 #-include-pch CImg.h.pch -include-pch gmic.h.pch
-%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" lib
-%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" libc
-%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" cli
+%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
+%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
+%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
 %make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" zart
-%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" gmic_qt
-%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" krita_qt
+%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gmic_qt
+%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" krita_qt
 # Not only does GTK suck, the gtk module also doesn't compile...
-#make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" gimp_gtk
-%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="`pwd`" gimp_qt
+#make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp_gtk
+%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp_qt
 #%make QMAKE=qmake-qt5 WGET=false gimp gimp_qt krita_qt gmic_qt
 
 %install
-pushd src
+cd src
 %makeinstall_std
-popd
+cd -
