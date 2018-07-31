@@ -1,6 +1,6 @@
 sources:
-  gmic-v.2.2.3.tar.gz: 56beb236ee0bc833909f6af5de9cf3f9ecca0262
-  gmic-qt-v.2.2.3.tar.gz: a3c889de09031d34754c9bb3bd1004a2f67713c6
-  CImg-v.2.2.3.tar.gz: fa9243926a6efbe855511ea6d48ebfcf0922333a
-  zart-master.zip: f5de963f42af90a67b5405ee972b706cf2cc9693
-  gmic-community-master.zip: 97696571ea01d8e2d94dc3bd41060cbbe470aaee
+  gmic-v.2.3.3.tar.gz: 142a4c9283b3b9bae10a2e915b498a908463b382
+  gmic-qt-v.2.3.3.tar.gz: e4dff37f602a4c0d73559a26ec4780b682342643
+  CImg-v.2.3.3.tar.gz: ce081769db22a68dba1041a23da9d5b5d640bfdd
+  zart-master.zip: bbf901b129cb74a27c233782bc03553b854d473c
+  gmic-community-master.zip: c9fa37d6c9c504c20dd7d525075283f0619c7bc2
