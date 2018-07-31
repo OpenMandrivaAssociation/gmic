@@ -1,6 +1,6 @@
-%define	major	2
-%define	libname %mklibname %{name} %{major}
-%define	develname %mklibname -d %{name}
+%define major 2
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname -d %{name}
 
 %define cmajor 2
 %define clibname %mklibname cgmic %{cmajor}
@@ -12,7 +12,7 @@
 %endif
 
 Name:		gmic
-Version:	2.2.3
+Version:	2.3.3
 Release:	1
 Group:		Graphics
 # CeCILL version 2.0
