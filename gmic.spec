@@ -106,7 +106,7 @@ own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
 %{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
-%{_libdir}/gimp/2.0/plug-ins/gmic_film_cluts.gmz
+#{_libdir}/gimp/2.0/plug-ins/gmic_film_cluts.gmz
 
 #------------------------------------------------------
 
