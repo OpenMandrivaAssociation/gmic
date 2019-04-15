@@ -12,8 +12,8 @@
 %endif
 
 Name:		gmic
-Version:	2.4.5
-Release:	2
+Version:	2.5.6
+Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -106,7 +106,7 @@ own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
 %{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
-%{_libdir}/gimp/2.0/plug-ins/gmic_film_cluts.gmz
+%{_libdir}/gimp/2.0/plug-ins/gmic_cluts.gmz
 
 #------------------------------------------------------
 
