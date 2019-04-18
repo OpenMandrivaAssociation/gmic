@@ -12,7 +12,7 @@
 %endif
 
 Name:		gmic
-Version:	2.5.6
+Version:	2.5.7
 Release:	1
 Group:		Graphics
 # CeCILL version 2.0
@@ -20,7 +20,7 @@ License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
 Source0:	https://github.com/dtschump/gmic/archive/gmic-v.%{version}.tar.gz
-Source1:	https://github.com/c-koi/gmic-qt/archive/gmic-qt-v.%{version}.tar.gz
+Source1:	https://github.com/c-koi/gmic-qt/archive/gmic-qt-v.2.5.6.tar.gz
 Source2:	https://github.com/c-koi/zart/archive/zart-master.tar.gz
 Source3:	https://github.com/dtschump/gmic-community/archive/gmic-community-master.tar.gz
 Source4:	https://github.com/dtschump/CImg/archive/CImg-v.%{version}.tar.gz
@@ -46,6 +46,10 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	libatomic-devel
+%ifarch %{ix86}
+BuildRequires:  gomp-devel
+%endif
+
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
 BuildConflicts: gmic-devel
@@ -226,6 +230,12 @@ ln -s ../gmic-qt ../gmic-community ../CImg .
 #ln -s ../../CImg/CImg.h .
 
 %build
+#Build fail on i686 on Clang8
+# error: undefined reference to '__atomic_load'
+%ifarch %{ix86}
+export CC=gcc
+export CXX=g++
+%endif
 %setup_compile_flags
 
 # (tpg) use OMP form llvm
