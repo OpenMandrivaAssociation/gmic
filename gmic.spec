@@ -46,6 +46,7 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	libatomic-devel
+BuildRequires:  gomp-devel
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
 BuildConflicts: gmic-devel
