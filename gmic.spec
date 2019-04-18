@@ -226,6 +226,12 @@ ln -s ../gmic-qt ../gmic-community ../CImg .
 #ln -s ../../CImg/CImg.h .
 
 %build
+#Build fail on i686 on Clang8
+# error: undefined reference to '__atomic_load'
+%ifarch %{ix86}
+export CC=gcc
+export CXX=g++
+%endif
 %setup_compile_flags
 
 # (tpg) use OMP form llvm
