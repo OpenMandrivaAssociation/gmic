@@ -20,7 +20,7 @@ License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
 Source0:	https://github.com/dtschump/gmic/archive/gmic-v.%{version}.tar.gz
-Source1:	https://github.com/c-koi/gmic-qt/archive/gmic-qt-v.2.5.6.tar.gz
+Source1:	https://github.com/c-koi/gmic-qt/archive/gmic-qt-v.%{version}.tar.gz
 Source2:	https://github.com/c-koi/zart/archive/zart-master.tar.gz
 Source3:	https://github.com/dtschump/gmic-community/archive/gmic-community-master.tar.gz
 Source4:	https://github.com/dtschump/CImg/archive/CImg-v.%{version}.tar.gz
