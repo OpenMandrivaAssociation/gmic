@@ -7,9 +7,9 @@
 %define cdevelname %mklibname -d cgmic
 
 %define _disable_lto 1
-%ifarch aarch64
+#ifarch aarch64
 %global optflags %{optflags} -fuse-ld=bfd
-%endif
+#endif
 
 Name:		gmic
 Version:	2.6.7
