@@ -46,7 +46,7 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	libatomic-devel
-%ifarch %{ix86}
+%ifarch %{ix86} %{armx}
 BuildRequires:  gomp-devel
 %endif
 
@@ -253,6 +253,16 @@ cp %{SOURCE5} .
 #%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c CImg.h -o CImg.h.pch
 #%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c gmic.h -o gmic.h.pch
 #-include-pch CImg.h.pch -include-pch gmic.h.pch
+%ifarch %{ix86} %{armx}
+%make WGET=false OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
+%make WGET=false OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
+%make WGET=false OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
+%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" zart
+%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gmic_qt
+%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" krita
+%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
+%endif
+%ifnarch %{ix86} %{armx}
 %make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
 %make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
 %make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
@@ -260,7 +270,7 @@ cp %{SOURCE5} .
 %make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gmic_qt
 %make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" krita
 %make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
-
+%endif
 %install
 cd src
 %makeinstall_std
