@@ -12,7 +12,7 @@
 %endif
 
 Name:		gmic
-Version:	2.6.1
+Version:	2.6.7
 Release:	1
 Group:		Graphics
 # CeCILL version 2.0
