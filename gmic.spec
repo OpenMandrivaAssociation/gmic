@@ -249,7 +249,7 @@ sed -i -e 's|-Wl,-soname|$(CFLAGS) -Wl,-soname|' Makefile
 %make clean
 cp %{SOURCE5} .
 # We can save some compile time by generating a PCH for CImg...
-%make WGET=false CC=%{__cc} CXX=%{__cxx} check_versions gmic.cpp gmic.h gmic_stdlib.h CImg.h
+#make WGET=false CC=%{__cc} CXX=%{__cxx} check_versions gmic.cpp gmic.h gmic_stdlib.h CImg.h
 #%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c CImg.h -o CImg.h.pch
 #%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c gmic.h -o gmic.h.pch
 #-include-pch CImg.h.pch -include-pch gmic.h.pch
