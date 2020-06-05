@@ -13,7 +13,7 @@
 
 Name:		gmic
 Version:	2.6.7
-Release:	2
+Release:	3
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -39,7 +39,7 @@ BuildRequires:	pkgconfig(Qt5Xml)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
-BuildRequires:	pkgconfig(opencv)
+BuildRequires:	pkgconfig(opencv4)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libpng)
