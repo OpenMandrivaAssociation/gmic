@@ -12,8 +12,8 @@
 #endif
 
 Name:		gmic
-Version:	2.6.7
-Release:	3
+Version:	2.9.1
+Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -21,8 +21,8 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
 Source0:	https://github.com/dtschump/gmic/archive/gmic-v.%{version}.tar.gz
 Source1:	https://github.com/c-koi/gmic-qt/archive/gmic-qt-v.%{version}.tar.gz
-Source2:	https://github.com/c-koi/zart/archive/zart-master.tar.gz
-Source3:	https://github.com/dtschump/gmic-community/archive/gmic-community-master.tar.gz
+Source2:	https://github.com/c-koi/zart/archive/zart-master.zip
+Source3:	https://github.com/dtschump/gmic-community/archive/gmic-community-master.zip
 Source4:	https://github.com/dtschump/CImg/archive/CImg-v.%{version}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
@@ -39,7 +39,7 @@ BuildRequires:	pkgconfig(Qt5Xml)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
-BuildRequires:	pkgconfig(opencv4)
+BuildRequires:	cmake(opencv)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libpng)

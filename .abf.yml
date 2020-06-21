@@ -1,6 +1,6 @@
 sources:
-  CImg-v.2.6.7.tar.gz: 464fa1c51ea8c697da3af2328c11be09d0e85b29
-  gmic-qt-v.2.6.7.tar.gz: 8d9ad69b6b54cc92b56b268d9d177316fd72ad21
-  gmic-v.2.6.7.tar.gz: 0e876de34d039a69f06cd32e3883f78e2c1f03aa
-  gmic-community-master.tar.gz: 6e1332f2cb4f9c0c4701d7f8f52c2dc30f981f4b
-  zart-master.tar.gz: e75a261e48d6ff0c2ec960917c651bf62ca0cd65
+  CImg-v.2.9.1.tar.gz: c32b3225c039f6a6950d992ec51ad5bac36a37d9
+  gmic-qt-v.2.9.1.tar.gz: b744d6334d5e765a7e990d98e992053ca5550cdf
+  gmic-v.2.9.1.tar.gz: ae5bdffff1c55e95dbb88575fe2209c8cd8fd386
+  gmic-community-master.zip: 214e852395a01e9f6c7f674d4ea7cbbd2609a86e
+  zart-master.zip: 151b453f9b54d6d5da943f339b2cef40c4ceaf6c
