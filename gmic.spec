@@ -8,22 +8,22 @@
 
 %define _disable_lto 1
 #ifarch aarch64
-%global optflags %{optflags} -fuse-ld=bfd
+#global optflags %{optflags} -fuse-ld=bfd
 #endif
 
 Name:		gmic
-Version:	2.9.1
-Release:	2
+Version:	2.9.2
+Release:	1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
-Source0:	https://github.com/dtschump/gmic/archive/gmic-v.%{version}.tar.gz
-Source1:	https://github.com/c-koi/gmic-qt/archive/gmic-qt-v.%{version}.tar.gz
-Source2:	https://github.com/c-koi/zart/archive/zart-master.zip
-Source3:	https://github.com/dtschump/gmic-community/archive/gmic-community-master.zip
-Source4:	https://github.com/dtschump/CImg/archive/CImg-v.%{version}.tar.gz
+Source0:	https://github.com/dtschump/gmic/archive/v.%{version}/gmic-v.%{version}.tar.gz
+Source1:	https://github.com/c-koi/gmic-qt/archive/v.%{version}/gmic-qt-v.%{version}.tar.gz
+Source2:	https://github.com/c-koi/zart/archive/master/zart-20201113.tar.gz
+Source3:	https://github.com/dtschump/gmic-community/archive/master/gmic-community-20201113.tar.gz
+Source4:	https://github.com/dtschump/CImg/archive/v.%{version}/CImg-v.%{version}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
@@ -140,6 +140,8 @@ Qt frontend for applying g'mic filters
 
 %files qt
 %{_bindir}/gmic_qt
+%{_datadir}/applications/gmic_qt.desktop
+%{_datadir}/icons/hicolor/*/apps/gmic_qt.*
 
 #------------------------------------------------------
 
@@ -152,6 +154,8 @@ Application for applying live effects to Webcam images
 
 %files zart
 %{_bindir}/zart
+%{_datadir}/applications/zart.desktop
+%{_datadir}/icons/hicolor/*/apps/zart.*
 
 #------------------------------------------------------
 
