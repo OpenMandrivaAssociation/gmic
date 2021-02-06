@@ -1,6 +1,6 @@
 sources:
-  CImg-v.2.9.2.tar.gz: 9b46efb4fa9a2695cb49cf9b2dfe9a43e6e6adac
-  gmic-qt-v.2.9.2.tar.gz: 9bbf9efe33746965eeebfd8eea6a40cfc9514848
-  gmic-v.2.9.2.tar.gz: 4174a618afa142504357ebc06fef36a71304704c
-  gmic-community-20201113.tar.gz: 10395a107472595beb689e9b12ee306fed06d11d
-  zart-20201113.tar.gz: d90d309b3c184e03db4be22ff31366ad5c9ab7ad
+  CImg-v.2.9.5.tar.gz: 788e1aa6536ff55fcc7b761360ca789129858d5c
+  gmic-qt-v.2.9.5.tar.gz: 8d9b7db3575607db5bd260591a74f761aec2a7f8
+  gmic-v.2.9.5.tar.gz: d3963437d7e439bf7737ee16fe00f1a2df41c711
+  gmic-community-20210206.tar.gz: acbf43ae15e77543679d6027a167cdbb2e6c9f25
+  zart-20210206.tar.gz: f040d798148b941072e67503ab7f8f1017861cb6

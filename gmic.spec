@@ -12,7 +12,7 @@
 #endif
 
 Name:		gmic
-Version:	2.9.2
+Version:	2.9.5
 Release:	1
 Group:		Graphics
 # CeCILL version 2.0
@@ -21,8 +21,8 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
 Source0:	https://github.com/dtschump/gmic/archive/v.%{version}/gmic-v.%{version}.tar.gz
 Source1:	https://github.com/c-koi/gmic-qt/archive/v.%{version}/gmic-qt-v.%{version}.tar.gz
-Source2:	https://github.com/c-koi/zart/archive/master/zart-20201113.tar.gz
-Source3:	https://github.com/dtschump/gmic-community/archive/master/gmic-community-20201113.tar.gz
+Source2:	https://github.com/c-koi/zart/archive/master/zart-20210206.tar.gz
+Source3:	https://github.com/dtschump/gmic-community/archive/master/gmic-community-20210206.tar.gz
 Source4:	https://github.com/dtschump/CImg/archive/v.%{version}/CImg-v.%{version}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source100:	%{name}.rpmlintrc
