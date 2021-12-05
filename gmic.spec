@@ -39,7 +39,6 @@ BuildRequires:	pkgconfig(Qt5Xml)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-2.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
-BuildRequires:  glibc-static-devel
 BuildRequires:	cmake(opencv)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(libcurl)
