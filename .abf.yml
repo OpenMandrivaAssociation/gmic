@@ -1,6 +1,6 @@
 sources:
-  CImg-v.2.9.6.tar.gz: e0be9176f131bd0e8e23f9dd74ae97823a3451f4
-  gmic-qt-v.2.9.6.tar.gz: 247e7d52f24c9cc8a67589a1e02142ce5c4e2dc4
-  gmic-v.2.9.6.tar.gz: 64f2d3a0f1483e71a5ff3852d8c14c0834adb73c
+  CImg-v.3.0.0.tar.gz: f91a447259426973c78a326fcfc94be0c968d631
+  gmic-community-gmic-3.0.0_pre-Win.tar.gz: 72d852111ed67a4ed7575aef30a91ffaa0729923
+  gmic-qt-v.3.0.0.tar.gz: e5a73b9c866e13b5491cbbc7334eed867e0ef4ae
+  gmic-v.3.0.0.tar.gz: bfe89449dbdde922c0ec050368226e392ec3945b
   zart-20210211.tar.gz: 7527de404fc53c0be653e0e8930c615ff6bc5fe1
-  gmic-community-20210211.tar.gz: acbf43ae15e77543679d6027a167cdbb2e6c9f25

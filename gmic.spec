@@ -1,8 +1,8 @@
-%define major 2
+%define major 3
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
 
-%define cmajor 2
+%define cmajor 3
 %define clibname %mklibname cgmic %{cmajor}
 %define cdevelname %mklibname -d cgmic
 
@@ -12,7 +12,7 @@
 #endif
 
 Name:		gmic
-Version:	2.9.6
+Version:	3.0.0
 Release:	3
 Group:		Graphics
 # CeCILL version 2.0
@@ -22,9 +22,10 @@ Url:		http://gmic.eu
 Source0:	https://github.com/dtschump/gmic/archive/v.%{version}/gmic-v.%{version}.tar.gz
 Source1:	https://github.com/c-koi/gmic-qt/archive/v.%{version}/gmic-qt-v.%{version}.tar.gz
 Source2:	https://github.com/c-koi/zart/archive/master/zart-20210211.tar.gz
-Source3:	https://github.com/dtschump/gmic-community/archive/master/gmic-community-20210211.tar.gz
+Source3:	https://github.com/dtschump/gmic-community/archive/master/gmic-community-gmic-3.0.0_pre-Win.tar.gz
 Source4:	https://github.com/dtschump/CImg/archive/v.%{version}/CImg-v.%{version}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
+Source6:	http://gmic.eu/gmic_stdlib_community.h
 Source100:	%{name}.rpmlintrc
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qmake5
@@ -111,6 +112,8 @@ own custom G'MIC-written filters in it.
 %files -n gimp-plugin-%{name}
 %{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
 %{_libdir}/gimp/2.0/plug-ins/gmic_cluts.gmz
+%{_libdir}/gimp/2.0/plug-ins/gmic_denoise_cnn.gmz
+
 
 #------------------------------------------------------
 
@@ -233,6 +236,11 @@ ln -s ../gmic-qt ../gmic-community ../CImg .
 #cd ../gmic-qt/src
 #ln -s ../../CImg/CImg.h .
 
+
+# (tpg) use OMP form llvm
+sed -i -e "s/-lgomp/-fopenmp/g" src/Makefile
+
+
 %build
 #Build fail on i686 on Clang8
 # error: undefined reference to '__atomic_load'
@@ -240,18 +248,16 @@ ln -s ../gmic-qt ../gmic-community ../CImg .
 export CC=gcc
 export CXX=g++
 %endif
-%setup_compile_flags
+%set_build_flags
 
-# (tpg) use OMP form llvm
-sed -i -e "s/-lgomp/-fopenmp/g" src/Makefile
-
-cd src
 # Fix install location...
-sed -i -e 's,LIB = lib,LIB = %{_lib},' Makefile
+sed -i -e 's,LIB = lib,LIB = %{_lib},' src/Makefile
 # And pass compiler flags while linking (vital for -flto)
-sed -i -e 's|-Wl,-soname|$(CFLAGS) -Wl,-soname|' Makefile
+sed -i -e 's|-Wl,-soname|$(CFLAGS) -Wl,-soname|' src/Makefile
+cd src
 %make clean
 cp %{SOURCE5} .
+cp %{SOURCE6} .
 # We can save some compile time by generating a PCH for CImg...
 #make WGET=false CC=%{__cc} CXX=%{__cxx} check_versions gmic.cpp gmic.h gmic_stdlib.h CImg.h
 #%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c CImg.h -o CImg.h.pch
@@ -264,7 +270,7 @@ cp %{SOURCE5} .
 %make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" zart
 %make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gmic_qt
 %make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" krita
-%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
+%make e QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
 %endif
 %ifnarch %{ix86} %{armx}
 %make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib

@@ -1,0 +1,17 @@
+    1. 	Don't try to use the cmake build. It doesn't work, at least not for me.
+    2. 	One thing that is essential to know is that the Makefile downloads files from the gmic site. This will not work when building on abf.
+    3. 	The files that are needed to build the package are not present in the tagged tar.gz archives on github or in the releases.
+    4.	To get these files you have to be on an internet connected machine but not on abf
+    5. 	The two files is question are gmic_stdlib.h and gmic_stdlib_community.h the former is required to build the gmic libraries 
+	and utilities and the latter to compile the QT interface.
+    6. 	These can be retrieved in their proper form by by running two makefile targets using the Makefile in the gmic-$(version) src directory
+    7.	Ensure that you have all the necessary build tools installed on the local machine. 'dnf install task-devel abf-console-client abb' should be sufficient.
+    8.  Clone the gmin repository from the OpenMandriva git with "abf get gmic"
+    9.	Run abb buildp to prepare the BUILD directory
+    10. Enter the BUILD directory and navigate to the gmic-$(version) src directory
+    11.	Run the following make commands 'make gmic_stdlib.h' and make gmic_stdlib_community.h
+    12. Copy the files to the root of the git repo so that they can be pushed along with spec file update. 
+	They will be copied across to the BUILD directory when the packages are built on abf.
+	Make sure the new files are committed to git when pushing to github.
+    
+Problems: Contact itchka@compuserve.com
