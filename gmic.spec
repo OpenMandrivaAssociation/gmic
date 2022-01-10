@@ -270,7 +270,7 @@ cp %{SOURCE6} .
 %make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" zart
 %make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gmic_qt
 %make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" krita
-%make e QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
+%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
 %endif
 %ifnarch %{ix86} %{armx}
 %make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
