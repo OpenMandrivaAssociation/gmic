@@ -6,27 +6,30 @@
 %define clibname %mklibname cgmic %{cmajor}
 %define cdevelname %mklibname -d cgmic
 
-%define _disable_lto 1
+%define snapshot 20220124
+
+#define _disable_lto 1
 #ifarch aarch64
 #global optflags %{optflags} -fuse-ld=bfd
 #endif
 
 Name:		gmic
-Version:	3.0.0
-Release:	4
+Version:	3.0.3
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
-Source0:	https://github.com/dtschump/gmic/archive/v.%{version}/gmic-v.%{version}.tar.gz
-Source1:	https://github.com/c-koi/gmic-qt/archive/v.%{version}/gmic-qt-v.%{version}.tar.gz
-Source2:	https://github.com/c-koi/zart/archive/master/zart-20210211.tar.gz
-Source3:	https://github.com/dtschump/gmic-community/archive/master/gmic-community-gmic-3.0.0_pre-Win.tar.gz
-Source4:	https://github.com/dtschump/CImg/archive/v.%{version}/CImg-v.%{version}.tar.gz
+Source0:	https://github.com/dtschump/gmic/archive/%{?snapshot:refs/heads/master.tar.gz#/gmic-%{snapshot}}%{!?snapshot:v.%{version}/gmic-v.%{version}}.tar.gz
+Source1:	https://github.com/c-koi/gmic-qt/archive/%{?snapshot:refs/heads/master.tar.gz#/gmic-qt-%{snapshot}}%{!?snapshot:v.%{version}/gmic-qt-v.%{version}}.tar.gz
+Source2:	https://github.com/c-koi/zart/archive/master/zart-%{snapshot}.tar.gz
+Source3:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-%{snapshot}.tar.gz
+Source4:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source6:	http://gmic.eu/gmic_stdlib_community.h
 Source100:	%{name}.rpmlintrc
+Patch0:		gmic-master-compile.patch
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(OpenEXR)
@@ -144,7 +147,7 @@ Qt frontend for applying g'mic filters
 %files qt
 %{_bindir}/gmic_qt
 %{_datadir}/applications/gmic_qt.desktop
-%{_datadir}/icons/hicolor/*/apps/gmic_qt.*
+%{_datadir}/icons/*/*/*/gmic_qt.*
 
 #------------------------------------------------------
 
@@ -223,65 +226,69 @@ This package contains the development file for gmic C bindings.
 #------------------------------------------------------
 
 %prep
-%setup -qn %{name}-v.%{version} -a 1 -a 2 -a 3 -a 4
+%setup -qn %{name}-%{?snapshot:master}%{!?snapshot:v.%{version}} -a 1 -a 2 -a 3 -a 4
 pushd ..
 rm -rf gmic-qt* zart* gmic-community* CImg*
 popd
-mv gmic-qt-v.* ../gmic-qt
+mv gmic-qt-* ../gmic-qt
 mv zart-* zart
 mv gmic-community-* ../gmic-community
 mv CImg-* ../CImg
 ln -s ../gmic-qt ../gmic-community ../CImg .
 
-#cd ../gmic-qt/src
-#ln -s ../../CImg/CImg.h .
-
+%autopatch -p1
 
 # (tpg) use OMP form llvm
 sed -i -e "s/-lgomp/-fopenmp/g" src/Makefile
 
 
 %build
-#Build fail on i686 on Clang8
-# error: undefined reference to '__atomic_load'
-%ifarch %{ix86}
-export CC=gcc
-export CXX=g++
-%endif
 %set_build_flags
+
+TOP="$(pwd)"
 
 # Fix install location...
 sed -i -e 's,LIB = lib,LIB = %{_lib},' src/Makefile
 # And pass compiler flags while linking (vital for -flto)
 sed -i -e 's|-Wl,-soname|$(CFLAGS) -Wl,-soname|' src/Makefile
 cd src
-%make clean
-cp %{SOURCE5} .
-cp %{SOURCE6} .
-# We can save some compile time by generating a PCH for CImg...
-#make WGET=false CC=%{__cc} CXX=%{__cxx} check_versions gmic.cpp gmic.h gmic_stdlib.h CImg.h
-#%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c CImg.h -o CImg.h.pch
-#%{__cxx} %{optflags} -x c++-header -std=c++11 -fopenmp -c gmic.h -o gmic.h.pch
-#-include-pch CImg.h.pch -include-pch gmic.h.pch
-%ifarch %{ix86} %{armx}
-%make WGET=false OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
-%make WGET=false OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
-%make WGET=false OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
-%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" zart
-%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gmic_qt
-%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" krita
-%make WGET=false QMAKE=qmake-qt5 OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
-%endif
-%ifnarch %{ix86} %{armx}
-%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
-%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
-%make WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
-%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" zart
-%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gmic_qt
-%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" krita
-%make WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" QT_GMIC_PATH="$(pwd)" gimp
-%endif
+
+cp -f %{SOURCE5} .
+cp -f %{SOURCE6} .
+%make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
+%make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
+%make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
+cd ../gmic-qt
+for i in krita none gimp; do
+	mkdir build-$i
+	cd build-$i
+	cmake \
+		-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+		-DGMIC_LIB_PATH=${TOP}/src \
+		-DGMIC_PATH=${TOP}/src \
+		-DGMIC_QT_HOST=$i \
+		-DENABLE_CURL:BOOL=ON \
+		-DENABLE_DYNAMIC_LINKING:BOOL=ON \
+		-DENABLE_FFTW3:BOOL=ON \
+		-G Ninja \
+		..
+	%ninja_build
+	cd ..
+done
+cd ../zart
+qmake-qt5 CONFIG+=release GMIC_DYNAMIC_LINKING=on GMIC_PATH=${TOP}/src GMIC_LIB_PATH=${TOP}/src zart.pro
+%make_build WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}"
+
 %install
 cd src
-%makeinstall_std
-cd -
+%make_install
+cd ../gmic-qt
+for i in krita none gimp; do
+	%ninja_install -C build-$i
+done
+mkdir -p %{buildroot}%{_datadir}/applications
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+cp -f gmic_qt.desktop %{buildroot}%{_datadir}/applications
+cp -f icons/application/48-gmic_qt.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/gmic_qt.png
+cp -f icons/application/gmic_qt.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps

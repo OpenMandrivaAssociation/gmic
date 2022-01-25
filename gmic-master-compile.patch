@@ -1,0 +1,12 @@
+diff -up gmic-master/src/gmic.h.omv~ gmic-master/src/gmic.h
+--- gmic-master/src/gmic.h.omv~	2022-01-25 04:20:25.157557089 +0100
++++ gmic-master/src/gmic.h	2022-01-25 04:20:45.117635769 +0100
+@@ -80,6 +80,8 @@ const char gmic_dollar = 23, gmic_lbrace
+ 
+ #ifndef gmic_core
+ 
++#include "CImg.h"
++
+ // Define classes 'gmic_image<T>' and 'gmic_list<T>'.
+ //---------------------------------------------------
+ #ifndef cimg_version
