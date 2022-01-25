@@ -54,6 +54,7 @@ BuildRequires:	libatomic-devel
 BuildRequires:  gomp-devel
 %endif
 BuildRequires:	cmake ninja
+BuildRequires:	cmake(Qt5LinguistTools)
 
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
