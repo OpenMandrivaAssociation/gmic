@@ -53,6 +53,7 @@ BuildRequires:	libatomic-devel
 %ifarch %{ix86} %{armx}
 BuildRequires:  gomp-devel
 %endif
+BuildRequires:	cmake ninja
 
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
