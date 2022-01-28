@@ -122,23 +122,6 @@ own custom G'MIC-written filters in it.
 
 #------------------------------------------------------
 
-%package -n krita-plugin-%{name}
-Summary:	gmic plugin for Krita
-Group:		Graphics
-Requires:	krita >= 3.0
-
-%description -n krita-plugin-%{name}
-G'MIC has been made available as an easy-to-use plug-in for Krita.
-It extends this retouching software capabilities by offering a large number of
-pre-defined image filters and effects.
-Of course, the plug-in is highly customizable and it is possible to add your
-own custom G'MIC-written filters in it.
-
-%files -n krita-plugin-%{name}
-%{_bindir}/gmic_krita_qt
-
-#------------------------------------------------------
-
 %package qt
 Summary:	Qt frontend for applying g'mic filters
 Group:		Graphics
@@ -261,7 +244,7 @@ cp -f %{SOURCE6} .
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
 cd ../gmic-qt
-for i in krita none gimp; do
+for i in none gimp; do
 	mkdir build-$i
 	cd build-$i
 	cmake \
@@ -285,7 +268,7 @@ qmake-qt5 CONFIG+=release GMIC_DYNAMIC_LINKING=on GMIC_PATH=${TOP}/src GMIC_LIB_
 cd src
 %make_install
 cd ../gmic-qt
-for i in krita none gimp; do
+for i in none gimp; do
 	%ninja_install -C build-$i
 done
 mkdir -p %{buildroot}%{_datadir}/applications
