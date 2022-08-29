@@ -6,7 +6,7 @@
 %define clibname %mklibname cgmic %{cmajor}
 %define cdevelname %mklibname -d cgmic
 
-%define snapshot 20220124
+#define snapshot 20220124
 
 #define _disable_lto 1
 #ifarch aarch64
@@ -14,8 +14,8 @@
 #endif
 
 Name:		gmic
-Version:	3.0.3
-Release:	%{?snapshot:0.%{snapshot}.}3
+Version:	3.1.4
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -23,8 +23,8 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		http://gmic.eu
 Source0:	https://github.com/dtschump/gmic/archive/%{?snapshot:refs/heads/master.tar.gz#/gmic-%{snapshot}}%{!?snapshot:v.%{version}/gmic-v.%{version}}.tar.gz
 Source1:	https://github.com/c-koi/gmic-qt/archive/%{?snapshot:refs/heads/master.tar.gz#/gmic-qt-%{snapshot}}%{!?snapshot:v.%{version}/gmic-qt-v.%{version}}.tar.gz
-Source2:	https://github.com/c-koi/zart/archive/master/zart-%{snapshot}.tar.gz
-Source3:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-%{snapshot}.tar.gz
+Source2:	https://github.com/c-koi/zart/archive/master/zart-20220124.tar.gz
+Source3:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20220124.tar.gz
 Source4:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
 Source5:	http://gmic.eu/gmic_stdlib.h
 Source6:	http://gmic.eu/gmic_stdlib_community.h
@@ -220,6 +220,13 @@ mv zart-* zart
 mv gmic-community-* ../gmic-community
 mv CImg-* ../CImg
 ln -s ../gmic-qt ../gmic-community ../CImg .
+cd gmic-qt/translations/filters
+for i in gmic_qt_??.csv; do
+	./csv2ts.sh -o $(basename $i .csv |cut -d_ -f3).ts $i
+done
+sed -i -e 's|<lt;b>gt;|\&lt;b\&gt;|g;s|<lt;/b>gt;|\&lt;/b\&gt;|g;s|>gt;|\&gt;|g;s|<lt;|\&lt;|g' *.ts
+lrelease *.ts
+cd ../../..
 
 %autopatch -p1
 
