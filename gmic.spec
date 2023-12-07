@@ -1,35 +1,29 @@
 %define major 3
-%define libname %mklibname %{name} %{major}
+%define oldlibname %mklibname %{name} 3
+%define libname %mklibname %{name}
 %define develname %mklibname -d %{name}
 
 %define cmajor 3
-%define clibname %mklibname cgmic %{cmajor}
+%define oldclibname %mklibname cgmic 3
+%define clibname %mklibname cgmic
 %define cdevelname %mklibname -d cgmic
 
-#define snapshot 20220124
-
-#define _disable_lto 1
-#ifarch aarch64
-#global optflags %{optflags} -fuse-ld=bfd
-#endif
-
 Name:		gmic
-Version:	3.1.4
-Release:	%{?snapshot:0.%{snapshot}.}5
+Version:	3.3.2
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
-Url:		http://gmic.eu
-Source0:	https://github.com/dtschump/gmic/archive/%{?snapshot:refs/heads/master.tar.gz#/gmic-%{snapshot}}%{!?snapshot:v.%{version}/gmic-v.%{version}}.tar.gz
-Source1:	https://github.com/c-koi/gmic-qt/archive/%{?snapshot:refs/heads/master.tar.gz#/gmic-qt-%{snapshot}}%{!?snapshot:v.%{version}/gmic-qt-v.%{version}}.tar.gz
-Source2:	https://github.com/c-koi/zart/archive/master/zart-20220124.tar.gz
-Source3:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20220124.tar.gz
-Source4:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
-Source5:	http://gmic.eu/gmic_stdlib.h
-Source6:	http://gmic.eu/gmic_stdlib_community.h
+Url:		https://gmic.eu
+Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
+Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
+Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20231207.tar.gz
+Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
+Source4:	http://gmic.eu/gmic_stdlib.h
+Source5:	http://gmic.eu/gmic_stdlib_community.h
 Source100:	%{name}.rpmlintrc
-Patch0:		gmic-master-compile.patch
+Patch0:		gmic-qt-linkage.patch
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(OpenEXR)
@@ -93,9 +87,11 @@ Anyway, the specific features described below make it a bit particular :
   a well established C++ template image processing toolkit, 
   developed by the same team of developers.
 
-%files
+%files -f gmic.lang
 %doc COPYING README
 %{_bindir}/%{name}
+%{_mandir}/man1/gmic.1*
+%{_datadir}/bash-completion/completions/gmic
 
 #------------------------------------------------------
 
@@ -118,8 +114,7 @@ own custom G'MIC-written filters in it.
 %{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
 %{_libdir}/gimp/2.0/plug-ins/gmic_cluts.gmz
 %{_libdir}/gimp/2.0/plug-ins/gmic_denoise_cnn.gmz
-
-
+%{_libdir}/gimp/2.0/plug-ins/gmic_fonts.gmz
 #------------------------------------------------------
 
 %package qt
@@ -153,8 +148,8 @@ Application for applying live effects to Webcam images
 %package -n %{libname}
 Summary:	Library for gmic
 Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
-Conflicts:	%{name} < 1.5.1.5-1
+Requires:	%{name} = %{EVRD}
+%rename %{oldlibname}
 
 %description -n %{libname}
 This package contains the library needed to run programs
@@ -168,10 +163,9 @@ dynamically linked with gmic.
 %package -n %{develname}
 Summary:	Header file for gmic
 Group:		Development/C++
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{EVRD}
 Obsoletes:	%{name}-gimp-devel < 1.5.1.5-1
-Provides:	%{name}-devel = %{version}-%{release}
-Conflicts:	%{name} < 1.5.1.5-1
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n %{develname}
 This package contains the development file for gmic.
@@ -186,6 +180,7 @@ This package contains the development file for gmic.
 Summary:	C Library for gmic
 Group:		System/Libraries
 Requires:	%{libname} = %{EVRD}
+%rename %{oldclibname}
 
 %description -n %{clibname}
 This package contains the library needed to run programs
@@ -211,15 +206,14 @@ This package contains the development file for gmic C bindings.
 #------------------------------------------------------
 
 %prep
-%setup -qn %{name}-%{?snapshot:master}%{!?snapshot:v.%{version}} -a 1 -a 2 -a 3 -a 4
+%setup -qn %{name}-%{?snapshot:master}%{!?snapshot:%{version}} -a 1 -a 2 -a 3
 pushd ..
-rm -rf gmic-qt* zart* gmic-community* CImg*
+rm -rf zart* gmic-community* CImg*
 popd
-mv gmic-qt-* ../gmic-qt
 mv zart-* zart
 mv gmic-community-* ../gmic-community
 mv CImg-* ../CImg
-ln -s ../gmic-qt ../gmic-community ../CImg .
+ln -s ../gmic-community ../CImg .
 cd gmic-qt/translations/filters
 for i in gmic_qt_??.csv; do
 	./csv2ts.sh -o $(basename $i .csv |cut -d_ -f3).ts $i
@@ -240,13 +234,13 @@ sed -i -e "s/-lgomp/-fopenmp/g" src/Makefile
 TOP="$(pwd)"
 
 # Fix install location...
-sed -i -e 's,LIB = lib,LIB = %{_lib},' src/Makefile
+sed -i -e 's,LIB ?= lib,LIB ?= %{_lib},' src/Makefile
 # And pass compiler flags while linking (vital for -flto)
 sed -i -e 's|-Wl,-soname|$(CFLAGS) -Wl,-soname|' src/Makefile
 cd src
 
+cp -f %{SOURCE4} .
 cp -f %{SOURCE5} .
-cp -f %{SOURCE6} .
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
@@ -262,6 +256,7 @@ for i in none gimp; do
 		-DENABLE_CURL:BOOL=ON \
 		-DENABLE_DYNAMIC_LINKING:BOOL=ON \
 		-DENABLE_FFTW3:BOOL=ON \
+		-DENABLE_SYSTEM_GMIC:BOOL=OFF \
 		-G Ninja \
 		..
 	%ninja_build
@@ -284,3 +279,5 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 cp -f gmic_qt.desktop %{buildroot}%{_datadir}/applications
 cp -f icons/application/48-gmic_qt.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/gmic_qt.png
 cp -f icons/application/gmic_qt.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+cd ..
+%find_lang gmic --with-man
