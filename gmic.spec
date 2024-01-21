@@ -9,8 +9,8 @@
 %define cdevelname %mklibname -d cgmic
 
 Name:		gmic
-Version:	3.3.2
-Release:	%{?snapshot:0.%{snapshot}.}2
+Version:	3.3.3
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -18,7 +18,7 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		https://gmic.eu
 Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
 Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
-Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20231207.tar.gz
+Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20240120.tar.gz
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
 Source4:	http://gmic.eu/gmic_stdlib.h
 Source5:	http://gmic.eu/gmic_stdlib_community.h
