@@ -1,5 +1,5 @@
 sources:
-  CImg-v.3.3.2.tar.gz: add641d948bf7bb383a4cc6529a53986f69e165f
-  gmic_3.3.2.tar.gz: a7898a5ed1ea6faf99176836dcb5116a374bc8da
+  CImg-v.3.3.3.tar.gz: 71ab9b6880aa057fd131e72ba17d61d838032bb7
+  gmic_3.3.3.tar.gz: 7277b12132117418db389f3281447f9dbfef7973
   zart-20231207.tar.gz: ba8b4df5a75420dbd4c06cb3c12710ad1a093b3f
-  gmic-community-20231207.tar.gz: 1f843be0fdf53ee687794fb9279a063c770fee57
+  gmic-community-20240120.tar.gz: 4321cd3240e01132e43ae3e6558a0d866bafd8f4
