@@ -112,9 +112,10 @@ own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
 %{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
-#{_libdir}/gimp/2.0/plug-ins/gmic_cluts.gmz
-#{_libdir}/gimp/2.0/plug-ins/gmic_denoise_cnn.gmz
-#{_libdir}/gimp/2.0/plug-ins/gmic_fonts.gmz
+%{_datadir}/gmic/gmic_cluts.gmz
+%{_datadir}/gmic/gmic_denoise_cnn.gmz
+%{_datadir}/gmic/gmic_fonts.gmz
+%{_datadir}/gmic/gmic_lightleaks.gmz
 #------------------------------------------------------
 
 %package qt
