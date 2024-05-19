@@ -9,7 +9,7 @@
 %define cdevelname %mklibname -d cgmic
 
 Name:		gmic
-Version:	3.3.3
+Version:	3.3.6
 Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
@@ -18,7 +18,7 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		https://gmic.eu
 Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
 Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
-Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20240120.tar.gz
+Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20240515.tar.gz
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
 Source4:	http://gmic.eu/gmic_stdlib.h
 Source5:	http://gmic.eu/gmic_stdlib_community.h
@@ -112,9 +112,10 @@ own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
 %{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
-%{_libdir}/gimp/2.0/plug-ins/gmic_cluts.gmz
-%{_libdir}/gimp/2.0/plug-ins/gmic_denoise_cnn.gmz
-%{_libdir}/gimp/2.0/plug-ins/gmic_fonts.gmz
+%{_datadir}/gmic/gmic_cluts.gmz
+%{_datadir}/gmic/gmic_denoise_cnn.gmz
+%{_datadir}/gmic/gmic_fonts.gmz
+%{_datadir}/gmic/gmic_lightleaks.gmz
 #------------------------------------------------------
 
 %package qt
