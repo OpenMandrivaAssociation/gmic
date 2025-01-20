@@ -24,7 +24,7 @@ Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.
 Source4:	http://gmic.eu/gmic_stdlib.h
 Source5:	http://gmic.eu/gmic_stdlib_community.h
 Source100:	%{name}.rpmlintrc
-Patch0:		gmic-qt-linkage.patch
+#Patch0:		gmic-qt-linkage.patch
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(OpenEXR)
