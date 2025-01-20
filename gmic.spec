@@ -217,7 +217,7 @@ mv zart-* zart
 mv gmic-community-* ../gmic-community
 mv CImg-* ../CImg
 ln -s ../gmic-community ../CImg .
-cd gmic-qt/translations/filters
+cd /translations/filters
 for i in gmic_qt_??.csv; do
 	./csv2ts.sh -o $(basename $i .csv |cut -d_ -f3).ts $i
 done
