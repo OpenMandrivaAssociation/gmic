@@ -1,5 +1,6 @@
 sources:
   CImg-v.3.5.0.tar.gz: 6cfcb1125796878f48c227ff0916e80e8dcd02dd
   gmic_3.5.0.tar.gz: dd8c85bcb28f408bc68c971dd5f73c68314e261d
+  gmic-qt-gmic_3.5.0.tar.gz: 87f94efd7fab41e21a443d4b6028a945f08558f3
   zart-20231207.tar.gz: ba8b4df5a75420dbd4c06cb3c12710ad1a093b3f
   gmic-community-master.tar.gz: d708102b13580777b0c9d5815e2d9cca4b44018b
