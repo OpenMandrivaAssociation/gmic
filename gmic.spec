@@ -16,7 +16,8 @@ Group:		Graphics
 License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		https://gmic.eu
-Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
+#Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
+Source0:	gmic-qt-gmic_3.5.0.tar.gz
 Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
 Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-master.tar.gz
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
@@ -208,7 +209,7 @@ This package contains the development file for gmic C bindings.
 #------------------------------------------------------
 
 %prep
-%setup -qn %{name}-%{?snapshot:master}%{!?snapshot:%{version}} -a 1 -a 2 -a 3
+%setup -qn gmic-qt-gmic_3.5.0 -a 1 -a 2 -a 3
 pushd ..
 rm -rf zart* gmic-community* CImg*
 popd
@@ -246,7 +247,7 @@ cp -f %{SOURCE5} .
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
-cd ../gmic-qt
+cd ..
 for i in none gimp; do
 	mkdir build-$i
 	cd build-$i
@@ -271,7 +272,7 @@ qmake-qt5 CONFIG+=release GMIC_DYNAMIC_LINKING=on GMIC_PATH=${TOP}/src GMIC_LIB_
 %install
 cd src
 %make_install
-cd ../gmic-qt
+cd ..
 for i in none gimp; do
 	%ninja_install -C build-$i
 done
