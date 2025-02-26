@@ -10,7 +10,7 @@
 
 Name:		gmic
 Version:	3.3.6
-Release:	%{?snapshot:0.%{snapshot}.}2
+Release:	%{?snapshot:0.%{snapshot}.}3
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
