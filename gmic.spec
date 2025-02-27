@@ -222,7 +222,7 @@ for i in gmic_qt_??.csv; do
 	./csv2ts.sh -o $(basename $i .csv |cut -d_ -f3).ts $i
 done
 sed -i -e 's|<lt;b>gt;|\&lt;b\&gt;|g;s|<lt;/b>gt;|\&lt;/b\&gt;|g;s|>gt;|\&gt;|g;s|<lt;|\&lt;|g' *.ts
-lrelease *.ts
+%{_qtdir}/bin/lrelease *.ts
 cd ../../..
 
 %autopatch -p1
