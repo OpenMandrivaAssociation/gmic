@@ -9,8 +9,8 @@
 %define cdevelname %mklibname -d cgmic
 
 Name:		gmic
-Version:	3.3.6
-Release:	%{?snapshot:0.%{snapshot}.}3
+Version:	3.5.2
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -111,11 +111,12 @@ Of course, the plug-in is highly customizable and it is possible to add your
 own custom G'MIC-written filters in it.
 
 %files -n gimp-plugin-%{name}
-%{_libdir}/gimp/2.0/plug-ins/gmic_gimp_qt
+%{_libdir}/gimp/3.0/plug-ins/gmic_gimp_qt
 %{_datadir}/gmic/gmic_cluts.gmz
 %{_datadir}/gmic/gmic_denoise_cnn.gmz
 %{_datadir}/gmic/gmic_fonts.gmz
 %{_datadir}/gmic/gmic_lightleaks.gmz
+%{_datadir}/gmic/gmic_scale2x_cnn.gmz
 #------------------------------------------------------
 
 %package qt
@@ -246,10 +247,11 @@ cp -f %{SOURCE5} .
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 cli
 cd ../gmic-qt
-for i in none gimp; do
+for i in none gimp3; do
 	mkdir build-$i
 	cd build-$i
 	cmake \
+		-DBUILD_USE_QT6:BOOL=ON \
 		-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 		-DGMIC_LIB_PATH=${TOP}/src \
 		-DGMIC_PATH=${TOP}/src \
@@ -271,7 +273,7 @@ qmake-qt5 CONFIG+=release GMIC_DYNAMIC_LINKING=on GMIC_PATH=${TOP}/src GMIC_LIB_
 cd src
 %make_install
 cd ../gmic-qt
-for i in none gimp; do
+for i in none gimp3; do
 	%ninja_install -C build-$i
 done
 mkdir -p %{buildroot}%{_datadir}/applications
