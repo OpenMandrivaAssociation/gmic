@@ -29,14 +29,15 @@ BuildRequires:	qmake5
 BuildRequires:	pkgconfig(OpenEXR)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(libjpeg)
-BuildRequires:	pkgconfig(Qt5Core)
-BuildRequires:	pkgconfig(Qt5Gui)
-BuildRequires:	pkgconfig(Qt5Network)
-BuildRequires:	pkgconfig(Qt5Widgets)
-BuildRequires:	pkgconfig(Qt5Xml)
+BuildRequires:	pkgconfig(Qt6Core)
+BuildRequires:	pkgconfig(Qt6Gui)
+BuildRequires:	pkgconfig(Qt6Network)
+BuildRequires:	pkgconfig(Qt6Widgets)
+BuildRequires:	pkgconfig(Qt6Xml)
 BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-3.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
+BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	cmake(opencv)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(libcurl)
@@ -48,7 +49,7 @@ BuildRequires:	libatomic-devel
 BuildRequires:  gomp-devel
 %endif
 BuildRequires:	cmake ninja
-BuildRequires:	cmake(Qt5LinguistTools)
+BuildRequires:	cmake(Qt6LinguistTools)
 
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
@@ -251,7 +252,7 @@ for i in none gimp3; do
 	mkdir build-$i
 	cd build-$i
 	cmake \
-		-DBUILD_USE_QT6:BOOL=ON \
+		-DBUILD_WITH_QT6:BOOL=ON \
 		-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 		-DGMIC_LIB_PATH=${TOP}/src \
 		-DGMIC_PATH=${TOP}/src \
