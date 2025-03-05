@@ -17,7 +17,7 @@ License:	CeCILL
 Summary:	A script language (G'MIC) dedicated to image processing
 Url:		https://gmic.eu
 Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
-#Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
+Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
 Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20240515.tar.gz
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
 Source4:	http://gmic.eu/gmic_stdlib.h
@@ -50,6 +50,13 @@ BuildRequires:  gomp-devel
 %endif
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(Qt6LinguistTools)
+
+# for qt5 zart
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Network)
+BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt5Xml)
 
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
@@ -209,11 +216,11 @@ This package contains the development file for gmic C bindings.
 #------------------------------------------------------
 
 %prep
-%setup -qn %{name}-%{?snapshot:master}%{!?snapshot:%{version}} -a 2 -a 3
+%setup -qn %{name}-%{?snapshot:master}%{!?snapshot:%{version}} -a 1 -a 2 -a 3
 pushd ..
 rm -rf zart* gmic-community* CImg*
 popd
-#mv zart-* zart
+mv zart-* zart
 mv gmic-community-* ../gmic-community
 mv CImg-* ../CImg
 ln -s ../gmic-community ../CImg .
@@ -266,9 +273,9 @@ for i in none gimp3; do
 	%ninja_build
 	cd ..
 done
-#cd ../zart
-#qmake-qt5 CONFIG+=release GMIC_DYNAMIC_LINKING=on GMIC_PATH=${TOP}/src GMIC_LIB_PATH=${TOP}/src zart.pro
-#make_build WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}"
+cd ../zart
+qmake-qt5 CONFIG+=release GMIC_DYNAMIC_LINKING=on GMIC_PATH=${TOP}/src GMIC_LIB_PATH=${TOP}/src zart.pro
+%make_build WGET=false QMAKE=qmake-qt5 CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}"
 
 %install
 cd src
