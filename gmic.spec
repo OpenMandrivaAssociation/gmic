@@ -51,6 +51,13 @@ BuildRequires:  gomp-devel
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(Qt6LinguistTools)
 
+# for qt5 zart
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Network)
+BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt5Xml)
+
 # gmic Makefiles are rather broken and will prefer
 # /usr/include/gmic.h over the local gmic.h
 BuildConflicts: gmic-devel
