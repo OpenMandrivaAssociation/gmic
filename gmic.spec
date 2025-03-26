@@ -9,7 +9,7 @@
 %define cdevelname %mklibname -d cgmic
 
 Name:		gmic
-Version:	3.5.2
+Version:	3.5.3
 Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
@@ -18,7 +18,7 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		https://gmic.eu
 Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
 Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
-Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20240515.tar.gz
+Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20250319.tar.gz
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
 Source4:	http://gmic.eu/gmic_stdlib.h
 Source5:	http://gmic.eu/gmic_stdlib_community.h
@@ -106,7 +106,7 @@ Anyway, the specific features described below make it a bit particular :
 %package -n gimp-plugin-%{name}
 Summary:	gmic plugin for gimp
 Group:		Graphics
-Requires:	gimp >= 2.6.0
+Requires:	gimp >= 3.0.0
 Obsoletes:	%{name}-gimp < 1.5.1.5-1
 Provides:	%{name}-gimp = %{version}-%{release}
 Conflicts:	%{name} < 1.5.1.5-1
