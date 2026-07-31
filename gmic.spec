@@ -9,7 +9,7 @@
 %define cdevelname %mklibname -d cgmic
 
 Name:		gmic
-Version:	3.7.6
+Version:	4.0.3
 Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
