@@ -22,6 +22,7 @@ Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.ta
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
 Source4:	http://gmic.eu/gmic_stdlib.h
 Source5:	http://gmic.eu/gmic_stdlib_community.h
+Source100:	%{name}.rpmlintrc
 Patch0:		gmic-qt-linkage.patch
 Patch1:		gmic-opencv5.patch
 BuildRequires:	ffmpeg-devel
@@ -292,6 +293,3 @@ cp -f icons/application/48-gmic_qt.png %{buildroot}%{_datadir}/icons/hicolor/48x
 cp -f icons/application/gmic_qt.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 cd ..
 %find_lang gmic --with-man
-
-# keep %mklibname visible for rpmlint SpecCheck (checks last line only)
-# %mklibname
