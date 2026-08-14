@@ -24,6 +24,7 @@ Source4:	http://gmic.eu/gmic_stdlib.h
 Source5:	http://gmic.eu/gmic_stdlib_community.h
 Source100:	%{name}.rpmlintrc
 Patch0:		gmic-qt-linkage.patch
+Patch1:		gmic-opencv5.patch
 BuildRequires:	ffmpeg-devel
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(OpenEXR)
@@ -38,7 +39,7 @@ BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(gimp-3.0)
 BuildRequires:	pkgconfig(GraphicsMagick)
 BuildRequires:	pkgconfig(libwebp)
-BuildRequires:	cmake(opencv)
+BuildRequires:	pkgconfig(opencv5)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libpng)

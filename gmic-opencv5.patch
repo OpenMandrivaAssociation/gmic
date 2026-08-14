@@ -1,0 +1,35 @@
+--- a/zart/zart.pro
++++ b/zart/zart.pro
+@@ -34,13 +34,16 @@
+ #
+ # OpenCV
+ #
++packagesExist(opencv5) {
++   PKGCONFIG += opencv5
++}
+ packagesExist(opencv4) { # e.g. Ubuntu 20.04
+    PKGCONFIG += opencv4
+ }
+ packagesExist(opencv) {
+    PKGCONFIG += opencv
+ }
+-!packagesExist(opencv):!packagesExist(opencv4) {
++!packagesExist(opencv):!packagesExist(opencv4):!packagesExist(opencv5) {
+   error(Cannot find OpenCV)
+ }
+ 
+--- a/cmake/FindOpenCV.cmake
++++ b/cmake/FindOpenCV.cmake
+@@ -1,7 +1,11 @@
+ # The CMake modules shipped with OpenCV do not contain targets.
+ find_package(PkgConfig)
+ 
+-pkg_check_modules(OPENCV opencv4)
++pkg_check_modules(OPENCV opencv5)
++
++if(NOT OPENCV_FOUND)
++  pkg_check_modules(OPENCV opencv4)
++endif()
+ 
+ if(NOT OPENCV_FOUND)
+   pkg_check_modules(OPENCV opencv)
