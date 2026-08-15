@@ -47,3 +47,15 @@
  
  if(NOT OPENCV_FOUND)
    pkg_check_modules(OPENCV opencv)
+
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -419,7 +419,7 @@
+ ifeq ($(BUILD_OS),Darwin)
+ 	$(CXX) -dynamiclib -o libgmic.$(SOVERSION).dylib -install_name $(PREFIX)/$(LIB)/libgmic.$(SOVERSION).dylib -compatibility_version $(SOVERSION) -current_version $(SVERSION) $(MANDATORY_CFLAGS) libgmic.o $(LIBS)
+ else ifdef IS_CLANG
+-	$(CXX) -shared -std=c++11 -pedantic -o libgmic.so.$(VERSION) libgmic.o $(LIBS)
++	$(CXX) -shared -std=c++11 -pedantic -Wl,-soname,libgmic.so.$(VERSION1) -o libgmic.so.$(VERSION) libgmic.o $(LIBS)
+ else
+ 	$(CXX) -shared -std=c++11 -pedantic -Wl,-soname,libgmic.so.$(VERSION1) -o libgmic.so.$(VERSION) libgmic.o $(LIBS)
+ endif
