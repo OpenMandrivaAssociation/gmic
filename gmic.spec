@@ -1,9 +1,9 @@
-%define major 3
+%define major 4
 %define oldlibname %mklibname %{name} 3
 %define libname %mklibname %{name}
 %define develname %mklibname -d %{name}
 
-%define cmajor 3
+%define cmajor 4
 %define oldclibname %mklibname cgmic 3
 %define clibname %mklibname cgmic
 %define cdevelname %mklibname -d cgmic
