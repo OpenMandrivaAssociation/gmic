@@ -1,2 +1,2 @@
-# libgmic ships both as .so.1 and .so.2
-addFilter("E: incoherent-version-in-name")
+# libgmic used to ship both .so.1 and .so.2. rpmlint 2.10 no longer
+# emits incoherent-version-in-name, and an unused filter fails the SRPM check.

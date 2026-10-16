@@ -127,6 +127,7 @@ own custom G'MIC-written filters in it.
 %{_datadir}/gmic/gmic_cluts.gmz
 %{_datadir}/gmic/gmic_denoise_cnn.gmz
 %{_datadir}/gmic/gmic_fonts.gmz
+%{_datadir}/gmic/gmic_grain.gmz
 %{_datadir}/gmic/gmic_lightleaks.gmz
 %{_datadir}/gmic/gmic_scale2x_cnn.gmz
 #------------------------------------------------------
