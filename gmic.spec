@@ -9,7 +9,7 @@
 %define cdevelname %mklibname -d cgmic
 
 Name:		gmic
-Version:	4.0.5
+Version:	4.0.7
 Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
@@ -18,13 +18,11 @@ Summary:	A script language (G'MIC) dedicated to image processing
 Url:		https://gmic.eu
 Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
 Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
-Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20261016.tar.gz
+Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20261029.tar.gz
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
-# gmic_stdlib.h is no longer published. 4.0.5 only compiles
-# gmic_stdlib_community.h; the unversioned URL is already 4.0.6,
-# so Source5 is the 4.0.5 release header (gmic_stdlib_community405.h).
-Source4:	http://gmic.eu/gmic_stdlib.h
-Source5:	https://gmic.eu/gmic_stdlib_community405.h#/gmic_stdlib_community.h
+# 4.0.7 compiles gmic_stdlib_community.h, not gmic_stdlib.h.
+# The unversioned header URL drifts, so pin the 4.0.7 release file.
+Source5:	https://gmic.eu/gmic_stdlib_community407.h#/gmic_stdlib_community.h
 Source100:	%{name}.rpmlintrc
 Patch0:		gmic-qt-linkage.patch
 Patch1:		gmic-opencv5.patch
@@ -254,7 +252,7 @@ sed -i -e 's,LIB ?= lib,LIB ?= %{_lib},' src/Makefile
 sed -i -e 's|-Wl,-soname|$(CFLAGS) -Wl,-soname|' src/Makefile
 cd src
 
-cp -f %{SOURCE4} .
+# Do not copy a stale gmic_stdlib.h; only the community header is compiled.
 cp -f %{SOURCE5} .
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 lib
 %make_build -j1 WGET=false CC=%{__cc} CXX=%{__cxx} OPT_CFLAGS="%{optflags}" NOSTRIP=1 libc
