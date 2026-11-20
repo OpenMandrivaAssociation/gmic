@@ -9,8 +9,8 @@
 %define cdevelname %mklibname -d cgmic
 
 Name:		gmic
-Version:	4.0.7
-Release:	%{?snapshot:0.%{snapshot}.}2
+Version:	4.0.8
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Graphics
 # CeCILL version 2.0
 License:	CeCILL
@@ -20,9 +20,9 @@ Source0:	https://gmic.eu/files/source/gmic_%{version}.tar.gz
 Source1:	https://github.com/c-koi/zart/archive/master/zart-20231207.tar.gz
 Source2:	https://github.com/dtschump/gmic-community/archive/refs/heads/master.tar.gz#/gmic-community-20261029.tar.gz
 Source3:	https://github.com/dtschump/CImg/archive/%{?snapshot:refs/heads/master.tar.gz#/cimg-%{snapshot}}%{!?snapshot:v.%{version}/CImg-v.%{version}}.tar.gz
-# 4.0.7 compiles gmic_stdlib_community.h, not gmic_stdlib.h.
-# The unversioned header URL drifts, so pin the 4.0.7 release file.
-Source5:	https://gmic.eu/gmic_stdlib_community407.h#/gmic_stdlib_community.h
+# 4.0.8 compiles gmic_stdlib_community.h, not gmic_stdlib.h.
+# The unversioned header URL drifts, so pin the 4.0.8 release file.
+Source5:	https://gmic.eu/gmic_stdlib_community408.h#/gmic_stdlib_community.h
 Source100:	%{name}.rpmlintrc
 Patch0:		gmic-qt-linkage.patch
 Patch1:		gmic-opencv5.patch

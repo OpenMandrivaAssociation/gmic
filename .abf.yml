@@ -1,6 +1,6 @@
 sources:
   zart-20231207.tar.gz: ba8b4df5a75420dbd4c06cb3c12710ad1a093b3f
-  gmic_4.0.7.tar.gz: dbcebc6be19b93760be7470c06becc5cde9280db
-  CImg-v.4.0.7.tar.gz: 4d881021a16ba826575d3e3749c59156dfb1a713
-  gmic_stdlib_community.h: 2366eba6328f0c12cea211a9f1a1c1df0f51c69d
   gmic-community-20261029.tar.gz: cd504dbf0f10b3c8b843a2d54d1d04f9a2b0a75d
+  gmic_4.0.8.tar.gz: d7b7e3abe4ff89a3ce75fada430f743bef3dd79c
+  CImg-v.4.0.8.tar.gz: 7230f6378cbbefca6034f98d72825f2be5372786
+  gmic_stdlib_community.h: d211ef75dfc5496331410613194134e162d4dbcd
